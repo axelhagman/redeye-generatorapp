@@ -20,7 +20,7 @@ function runMiddleware(req, res, fn) {
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (origin === 'http://localhost:3000/') {
+    if (origin === 'http://localhost:3000') {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
