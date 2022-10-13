@@ -18,19 +18,10 @@ function runMiddleware(req, res, fn) {
   });
 }
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (origin === 'http://localhost:3000') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
 const companyScreenshot = (req, res) => {
   (async () => {
-    await runMiddleware(req, res, cors(corsOptions));
+    console.log(req);
+    // await runMiddleware(req, res, cors());
     const {
       query: { company },
     } = req;
@@ -47,6 +38,7 @@ const companyScreenshot = (req, res) => {
     const file = await page.screenshot({ omitBackground: true });
 
     await browser.close();
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.statusCode = 200;
     res.send(file);
   })();
